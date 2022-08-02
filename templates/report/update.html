@@ -1,0 +1,57 @@
+{% extends "shared/layout.html" %}
+{% load static %}
+{% block static %}
+<link rel="stylesheet" href="{% static 'css/update.css' %}">      
+{% endblock static %}
+{% block body %}
+{% include "partials/_breadcrumb.html" %}
+
+ <!-- Showcase -->
+ <section id="showcase">
+    <div class="container text-center">
+      <div class="home-search p-5">
+        <div class="overlay p-5">
+          <h1 class="display-4 mb-4">
+            REPORT CASES
+          </h1>
+          <p class="lead">Tell us your report in details and we will get back to you in few minutes</p>
+          <div class="search">
+            <form  action="{% url 'update_report' report.id %}" method="POST" > 
+              {% csrf_token %}
+              <input type="hidden" name="user" id="id_user" value="{{ report.user.id }}">
+              <!-- Form Row 1 -->
+              <div class="form-row">
+                <div class="col-md-4 mb-3">
+                  <label class="sr-only">Type of Incident</label>
+                  {{ form.type_of_incident }}
+                  {{ form.type_of_incident.errors }}
+                </div>
+  
+                <div class="col-md-8 mb-3">
+                  <label class="sr-only">Description</label>
+                  {{ form.descriptions }}
+                  {{ form.descriptions.errors }}
+                </div>
+              </div>
+              <!-- Form Row 2 -->
+              <div class="form-row">
+                <div class="col-md-6 mb-3">
+                  <label class="sr-only">Photos</label>
+                  {{ form.photo }}
+                  {{ form.photo.errors }}
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="sr-only">Date of incident</label>
+                  {{ form.date_of_incident }}
+                  {{ form.date_of_incident.errors }}
+                </div>
+              </div>
+              <input type="hidden" name="next" value="{{ next }}">
+              <button class="btn btn-secondary btn-block mt-4" type="submit" value="submit" >Save changes</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock body %}

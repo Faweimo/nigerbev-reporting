@@ -1,0 +1,10 @@
+/* .wrapper {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+} */
+
+.wrapper .box {
+    border: 2px solid aqua;
+    padding: 36px;
+}
+

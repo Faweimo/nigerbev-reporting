@@ -1,0 +1,72 @@
+REPORTING SYSTEM FUNCTIONALITIES
+
+1. Full User Authentication and Authorization
+2. User Dashboard 
+	-Report Status
+	-Total close
+	-Total open
+	-Department
+	-Bar Chart for Data Analysis(Total close and Total open against number of reported cases)
+	
+
+	User Role
+	-is_staff only BOOL
+	-is_admin grant BOOL
+	-is_superadmin BOOL
+	
+
+	Report Model																Feedback Model
+	-user ONE KEY
+	-department FGN	KEY	#this will be in user model					-description TEXT FIELD	
+	-description 	TEXT FIELD										-corrective measures TEXT FIELD
+	-photo upload	FILE FIELD										-root of the causes TEXT FIELD
+	-type of incident(dynamic) FGN KEY								-date feedback DATETIMEFIELD(AUTO)
+	-date of incident DATETIMEFIELD(MANUAL)				
+	-date reported	  DATETIMEFIELD(AUTO)
+	-status INT FIELD
+	-feedback FGN KEY
+
+		Type of Incident Model					Department Model
+	-FIRST AID 						-name CHARFIELD
+	-Near Miss 						#Nigerev
+	-Loss Time Measures(LTA)				#Distell
+	-Medical Treatment Accident(MTA)			#Warehouse
+	-Restricted Work Case (RWC)				#Quality Control
+		MODEL						#Engineering
+	Incident CHARFIELD					#Admin
+	
+
+3 Admin Dashboard
+	-can view user report 
+	-Can reply user report
+	
+
+
+	
+
+
+
+class Climb(models.Model):
+    name = models.CharField(max_length=20, default='')
+    grades = [('v'+str(i),'v'+str(i))for i in range(0,13)]
+    grade = models.CharField(max_length=3, choices=grades, default='v-1')
+    weeks = [(i,i)for i in range(1,13)]
+    week = models.IntegerField(choices=weeks, default=0)
+    points = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.name
+
+class Climber(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    grades = [('v'+str(i),'v'+str(i))for i in range(0,13)]
+    highest_grade = models.CharField(max_length=3, choices=grades, default='v0')
+    team = models.ForeignKey(Team, null=True, on_delete=models.SET_NULL)
+    climbs_completed = models.ManyToManyField(Climb, blank=True)
+
+    def __str__(self):
+        return self.user.username
+
+    # for each climbs_completed, sum up the points
+    def total_score(self):
+        pass

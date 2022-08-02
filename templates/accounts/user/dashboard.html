@@ -1,0 +1,163 @@
+{% extends "shared/layout.html" %}
+{% load static %}
+
+{% block body %}
+  
+<section id="showcase-inner" class="py-5 text-white">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-md-12">
+        <h1 class="display-4">{{user.first_name}} {{user.last_name}}</h1>
+        <p class="lead">{{user.matric_no}}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% include "partials/_breadcrumb.html" %}
+<section id="dashboard" class="py-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2>Welcome {{ user.first_name}}</h2>
+        <div class="wrapper">
+          <div>
+            <span>
+                Total Report made
+            </span>
+            <br>
+            <span>
+                {{ count }}
+            </span>
+        </div>
+        <div>
+            <span>
+                Total Done Report
+            </span>
+            <br>
+            <span>
+                {{ done_report }}
+            </span>
+        </div>
+        <div>
+            <span>
+                Total Report in Process
+            </span>
+            <br>
+            <span>
+                {{in_process_report}}
+            </span>
+        </div>
+        <div>
+          <span>
+              Total Report Ignore
+          </span>
+          <br>
+          <span>
+              {{ignore_report}}
+          </span>
+      </div>
+
+        </div> 
+          <table class="table">
+            <thead>
+              <tr>
+                <th>
+                    S/N
+                </th>
+                
+                <th>
+                    Type of Incidents
+                </th>
+                <th>
+                  Descriptions
+              </th>
+              <th>
+                Date Reported
+              </th>
+              
+              <th>
+                Date of Incident
+              </th>
+              <th>
+                  Status
+              </th>
+              <th>
+                Feedback
+              </th>
+              <th>
+                Actions
+            </th>
+            </tr>
+            </thead>
+            <tbody>
+              {% if reports %}
+                    {% for report in reports %}
+                
+                  <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td> {{ report.type_of_incident.name }}</td>
+                    <td> {{report.descriptions | safe }}</td>
+                    <td> {{report.date_reported }}</td>
+                    <td> {{report.date_of_incident }}</td>
+                    <td>
+                        <!-- Report status  -->
+                        {% if report.status == 1 %}
+                            <span class="approve-green">
+                                Done
+                            </span>
+                            
+                          {% elif report.status == 2%}
+                          <span class="disaaproved-red">
+                              Ignore
+                          </span>
+                          {% else %}
+                          <span>
+                            In process
+                          </span>
+                        {% endif %}
+                        </td> 
+                        <td>
+                          {{ report.feedback_reply | safe }}
+                      </td>
+                        <td>
+                          {% if report.feedback_reply != '' %}
+                            <span>
+                              <a href="{% url 'delete_report' report.id  %}">
+                                Delete
+                              </a>
+                            </span>
+                          {% else %}
+                            <span>
+                              <a href="{% url 'update_report' report.id  %}">
+                                Update
+                              </a>
+                            </span>
+                          {% endif %}
+                          
+                          
+                        </td>
+                        {% endfor %}
+                        {% else %}
+                        <p>
+                            No report made so far 
+                        </p>
+                        {% endif %}
+              </tr>
+            </tbody>
+          </table>
+        
+      </div>
+    </div>
+  </section>
+  <section id="dashboard" class="py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          
+      </div>
+    </div>
+  </section>
+
+
+{% endblock body %}

@@ -1,0 +1,18 @@
+{% extends "shared/layout.html" %}
+{% load static %}
+
+{% block body %}
+<form action="{% url 'delete_report' report.id %}" method="POST" >
+    {% csrf_token %}
+    <fieldset>
+        <legend>Delete Report</legend>
+           <h2>Are you sure you want to delete the post "{{ report.id }}"</h2>
+      
+        <div class="button">
+            <button type="submit"> Yes, DELETE</button>
+            <a href="{% url 'dashboard'  %}">cancel</a>
+        </div>
+    </fieldset>
+</form>
+
+{% endblock body %}

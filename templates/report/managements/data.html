@@ -1,0 +1,54 @@
+{% extends "shared/layout.html" %}
+{% load static %}
+
+{% block body %}
+{% autoescape off %}
+    {{ graph }}
+{% endautoescape %}
+<div class="container">
+    <div class="wrapper">
+        
+<canvas id="myChart" width="80" height="30"></canvas>
+
+    </div>
+</div>
+{% endblock body%}
+
+{% block script %}
+
+<script>
+const ctx = document.getElementById('myChart').getContext('2d');
+const myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Total Report', 'Total Done Report','Total Ignore Report'],
+        datasets: [{
+            label: ['Report Data Analysis'],
+            data: ['{{total_report}}','{{total_done_report}}','{{total_ignore_report}}'],
+            backgroundColor: [
+                '#F1A109',
+                '#40FA2E',
+                '#F60804',
+            ],
+            label: ['Report Data Analysis'],
+            data: ['{{total_report}}','{{total_done_report}}','{{total_ignore_report}}'],
+            backgroundColor: [
+                '#F1A109',
+                '#40FA2E',
+                '#F60804',
+            ],
+            borderWidth: 0,
+            barPercentage:0.3,
+        },
+    ]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+{% endblock script %}

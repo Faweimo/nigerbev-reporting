@@ -1,0 +1,36 @@
+{% extends "admin/base.html" %}
+{% load static %}
+{% block title %}
+Report Central Admin
+
+
+
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">
+    <b>
+        Report Central Admin
+    </b>
+</a></h1>
+{% endblock %}
+
+{% block extrastyle %}
+
+  <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+  <!-- Custom -->
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <link rel="stylesheet" href="{% static 'css/lightbox.css' %}">
+  <link rel="stylesheet" href="{% static 'css/fonts.css' %}">
+    <!-- STATIC CSS  -->
+
+{% endblock %}
+
+
+
+{% block nav-global %}{% endblock %}
+
+{% block footer %}
+
+
+{% endblock %}
